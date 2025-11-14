@@ -447,7 +447,7 @@ export default function VideoMeetComponent() {
 
 
     return (
-        <div className='landingPageContainer'>
+        <div className=''>
             <h1 style={{textAlign:"center", paddingTop:"2rem"}}>NexMeet</h1>
             {askForUsername === true ?
 

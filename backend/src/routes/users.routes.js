@@ -1,13 +1,14 @@
-import { Router } from "express";
-import { addToHistory, getUserHistory, login, register } from "../controllers/user.controller.js";
+import mongoose, { Schema } from "mongoose";
 
+const userScheme = new Schema(
+    {
+        name: { type: String, required: true },
+        username: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        token: { type: String }
+    }
+)
 
+const User = mongoose.model("User", userScheme);
 
-const router = Router();
-
-router.route("/login").post(login)
-router.route("/register").post(register)
-router.route("/add_to_activity").post(addToHistory)
-router.route("/get_all_activity").get(getUserHistory)
-
-export default router;
+export { User };
