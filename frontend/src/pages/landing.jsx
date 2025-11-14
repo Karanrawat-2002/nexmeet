@@ -32,9 +32,9 @@ export default function LandingPage() {
 
             <div className="landingMainContainer">
                 <div>
-                    <h1><span style={{ color: "#FF9839" }}>Connect</span> with your loved Ones</h1>
+                    <h1><span style={{ color: "#FF9839" }}>Build connection</span> with your fiends</h1>
 
-                    <p>Cover a distance by Apna Video Call</p>
+                    <p>Save time and cover a distance by NexMeet</p>
                     <div role='button'>
                         <Link to={"/auth"}>Get Started</Link>
                     </div>
