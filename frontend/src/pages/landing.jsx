@@ -32,7 +32,7 @@ export default function LandingPage() {
 
             <div className="landingMainContainer">
                 <div>
-                    <h1><span style={{ color: "#FF9839" }}>Build connection</span> with your fiends</h1>
+                    <h1><span style={{ color: "#00c407ff" }}>Build connection</span> with your friends</h1>
 
                     <p>Save time and cover a distance by NexMeet</p>
                     <div role='button'>
