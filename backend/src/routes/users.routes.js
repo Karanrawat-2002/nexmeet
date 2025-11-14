@@ -1,14 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import express from "express";
+import { login, register, getUserHistory, addToHistory } from "../controllers/user.controller.js";
 
-const userScheme = new Schema(
-    {
-        name: { type: String, required: true },
-        username: { type: String, required: true, unique: true },
-        password: { type: String, required: true },
-        token: { type: String }
-    }
-)
+const router = express.Router();
 
-const User = mongoose.model("User", userScheme);
+router.post("/login", login);
+router.post("/register", register);
+router.get("/history", getUserHistory);
+router.post("/history", addToHistory);
 
-export { User };
+export default router;
