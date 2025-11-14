@@ -447,20 +447,36 @@ export default function VideoMeetComponent() {
 
 
     return (
-        <div>
-
+        <div className='landingPageContainer'>
+            <h1 style={{textAlign:"center", paddingTop:"2rem"}}>NexMeet</h1>
             {askForUsername === true ?
 
-                <div>
+                <div style={{ 
+                    display:"flex", 
+                    flexWrap:"wrap",
+                    justifyContent:"space-evenly", 
+                    alignItems:"center",
+                    paddingTop:"10%"
+                    }}>
+                    
+                    <div style={{ 
+                    display:"flex", 
+                    flexDirection:"column",
+                    flexWrap:"wrap",
+                    justifyContent:"space-evenly", 
+                    
+                    }}>
+                        <h2 style={{marginBottom:"2rem"}}>Enter into Lobby </h2>
+                        <TextField 
+                        style={{backgroundColor:"white",
+                                borderRadius:"1rem",
+                                marginBottom:"1rem"
+                        }} id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
+                        <Button variant="contained" onClick={connect}>Connect</Button>
+                    </div>
 
-
-                    <h2>Enter into Lobby </h2>
-                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                    <Button variant="contained" onClick={connect}>Connect</Button>
-
-
-                    <div>
-                        <video ref={localVideoref} autoPlay muted></video>
+                    <div style={{width:"30rem"}} >
+                            <video style={{borderRadius:"4rem", width:"100%"}} ref={localVideoref} autoPlay muted></video>
                     </div>
 
                 </div> :
