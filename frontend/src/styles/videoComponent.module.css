@@ -1,7 +1,8 @@
 .meetVideoContainer {
     position: relative;
     height: 100vh;
-    background: rgb(1, 4, 48);
+    background:transparent;
+    color:black
 }
 
 .meetUserVideo {
@@ -18,6 +19,7 @@
     width: 100vw;
     bottom: 0;
     text-align: center;
+    background-color:rgb(3, 3, 57);
 }
 
 .buttonContainers svg {

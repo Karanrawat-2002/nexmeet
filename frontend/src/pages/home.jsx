@@ -24,11 +24,11 @@ function HomeComponent() {
 
             <div className="navBar">
 
-                <div style={{ display: "flex", alignItems: "center" }}>
+                {/* <div style={{ display: "flex", alignItems: "center" }}>
 
                     <h2>NexMeet</h2>
-                </div>
-
+                </div> */}
+                {/* <h2>NexMeet</h2> */}
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <IconButton onClick={
                         () => {
@@ -58,7 +58,7 @@ function HomeComponent() {
 
                         <div style={{ display: 'flex', gap: "10px" }}>
 
-                            <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
+                            <TextField style={{backgroundColor:"white", color:"white", borderRadius:"1rem"}} onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
                             <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
 
                         </div>

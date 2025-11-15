@@ -252,6 +252,60 @@ export default function VideoMeetComponent() {
         var signal = JSON.parse(message)
 
         if (fromId !== socketIdRef.current) {
+            // Create connection if it doesn't exist yet
+            if (!connections[fromId]) {
+                connections[fromId] = new RTCPeerConnection(peerConfigConnections)
+                
+                // Wait for their ice candidate
+                connections[fromId].onicecandidate = function (event) {
+                    if (event.candidate != null) {
+                        socketRef.current.emit('signal', fromId, JSON.stringify({ 'ice': event.candidate }))
+                    }
+                }
+
+                // Wait for their video stream
+                connections[fromId].onaddstream = (event) => {
+                    console.log("BEFORE:", videoRef.current);
+                    console.log("FINDING ID: ", fromId);
+
+                    let videoExists = videoRef.current.find(video => video.socketId === fromId);
+
+                    if (videoExists) {
+                        console.log("FOUND EXISTING");
+                        setVideos(videos => {
+                            const updatedVideos = videos.map(video =>
+                                video.socketId === fromId ? { ...video, stream: event.stream } : video
+                            );
+                            videoRef.current = updatedVideos;
+                            return updatedVideos;
+                        });
+                    } else {
+                        console.log("CREATING NEW");
+                        let newVideo = {
+                            socketId: fromId,
+                            stream: event.stream,
+                            autoplay: true,
+                            playsinline: true
+                        };
+
+                        setVideos(videos => {
+                            const updatedVideos = [...videos, newVideo];
+                            videoRef.current = updatedVideos;
+                            return updatedVideos;
+                        });
+                    }
+                };
+
+                // Add the local video stream
+                if (window.localStream !== undefined && window.localStream !== null) {
+                    connections[fromId].addStream(window.localStream)
+                } else {
+                    let blackSilence = (...args) => new MediaStream([black(...args), silence()])
+                    window.localStream = blackSilence()
+                    connections[fromId].addStream(window.localStream)
+                }
+            }
+
             if (signal.sdp) {
                 connections[fromId].setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(() => {
                     if (signal.sdp.type === 'offer') {
@@ -447,8 +501,8 @@ export default function VideoMeetComponent() {
 
 
     return (
-        <div className=''>
-            <h1 style={{textAlign:"center", paddingTop:"2rem"}}>NexMeet</h1>
+        <div className='landingPageContainer'>
+            {/* <h1 style={{textAlign:"center", paddingTop:"2rem",backgroundColor:"transparent", }}>NexMeet</h1> */}
             {askForUsername === true ?
 
                 <div style={{ 
@@ -456,7 +510,7 @@ export default function VideoMeetComponent() {
                     flexWrap:"wrap",
                     justifyContent:"space-evenly", 
                     alignItems:"center",
-                    paddingTop:"10%"
+                     paddingTop:"10%"
                     }}>
                     
                     <div style={{ 
@@ -486,10 +540,10 @@ export default function VideoMeetComponent() {
 
                     {showModal ? <div className={styles.chatRoom}>
 
-                        <div className={styles.chatContainer}>
+                        <div style={{}} className={styles.chatContainer}>
                             <h1>Chat</h1>
 
-                            <div className={styles.chattingDisplay}>
+                            <div style={{ overflowInline:"auto", height:"80%"}} className={styles.chattingDisplay}>
 
                                 {messages.length !== 0 ? messages.map((item, index) => {
 

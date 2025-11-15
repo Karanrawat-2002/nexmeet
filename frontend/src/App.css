@@ -65,7 +65,7 @@
   justify-content: space-between;
   padding-inline: 20px;
   text-align: center;
-
+  color: white;
 }
 .meetContainer {
   display: flex;
@@ -73,6 +73,7 @@
   height: 80vh;
   gap: 10vw;
   justify-content: center;
+  color: white;
 }
 
 
