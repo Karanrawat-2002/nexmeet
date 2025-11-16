@@ -68,23 +68,26 @@ export default function Authentication() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
+            <Grid className='landingPageContainer' container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
-                <Grid
+               
+                <Grid 
                     item
                     xs={false}
                     sm={4}
                     md={7}
                     sx={{
                         
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        // backgroundRepeat: 'no-repeat',
+                        // backgroundColor: (t) =>
+                        //     t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        // backgroundSize: 'cover',
+                        // backgroundPosition: 'center',
+                        // backgroundColor:"#292d48ff",
+                        
                     }}
-                />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                > <img style={{width:"100%"}} srcSet='/loginimage.png' alt="" /></Grid>
+                <Grid style={{backgroundColor:"transparent"}} item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
                         sx={{
                             my: 8,
@@ -92,6 +95,7 @@ export default function Authentication() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -100,16 +104,17 @@ export default function Authentication() {
 
 
                         <div>
-                            <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
+                            <Button style={{backgroundColor:"#368dffff", marginRight:"1rem"}} variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
                                 Sign In
                             </Button>
-                            <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
+                            <Button style={{backgroundColor:"#368dffff", color:"white", marginLeft:"1rem"}} variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
                                 Sign Up
                             </Button>
                         </div>
 
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             {formState === 1 ? <TextField
+                            style={{backgroundColor:"white"}}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -122,6 +127,7 @@ export default function Authentication() {
                             /> : <></>}
 
                             <TextField
+                                style={{backgroundColor:"white"}}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -134,6 +140,7 @@ export default function Authentication() {
 
                             />
                             <TextField
+                            style={{backgroundColor:"white"}}
                                 margin="normal"
                                 required
                                 fullWidth

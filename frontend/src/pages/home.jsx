@@ -28,37 +28,35 @@ function HomeComponent() {
 
                     <h2>NexMeet</h2>
                 </div> */}
-                {/* <h2>NexMeet</h2> */}
+                <h2>NexMeet</h2>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton onClick={
+                    
+                    <button style={{backgroundColor:"transparent", color:"#2071cfff",border:"none",marginRight:"1rem", fontSize:"1.5rem"}} onClick={
                         () => {
                             navigate("/history")
                         }
                     }>
-                        <RestoreIcon />
-                    </IconButton>
-                    <p>History</p>
-
-                    <Button onClick={() => {
+                       HISTORY
+                    </button>
+                    <Button 
+                        style={{fontSize:"1.5rem", }}
+                        onClick={() => {
                         localStorage.removeItem("token")
-                        navigate("/auth")
-                    }}>
+                        navigate("/")
+                       }}>
                         Logout
                     </Button>
                 </div>
-
-
             </div>
-
-
             <div className="meetContainer">
                 <div className="leftPanel">
                     <div>
+                       
                         <h2>Providing Quality Video Call Just Like Quality Education</h2>
 
-                        <div style={{ display: 'flex', gap: "10px" }}>
+                        <div style={{ display: 'flex', gap: "10px" , marginTop:"2rem"}}>
 
-                            <TextField style={{backgroundColor:"white", color:"white", borderRadius:"1rem"}} onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
+                            <TextField style={{backgroundColor:"white", color:"white", borderRadius:"0.5rem"}} onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
                             <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
 
                         </div>

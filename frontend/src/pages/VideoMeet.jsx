@@ -459,7 +459,7 @@ export default function VideoMeetComponent() {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
         } catch (e) { }
-        window.location.href = "/"
+        window.location.href = "/home"
     }
 
     let openChat = () => {
@@ -508,31 +508,40 @@ export default function VideoMeetComponent() {
                 <div style={{ 
                     display:"flex", 
                     flexWrap:"wrap",
-                    justifyContent:"space-evenly", 
-                    alignItems:"center",
-                     paddingTop:"10%"
-                    }}>
-                    
-                    <div style={{ 
-                    display:"flex", 
                     flexDirection:"column",
-                    flexWrap:"wrap",
-                    justifyContent:"space-evenly", 
-                    
-                    }}>
-                        <h2 style={{marginBottom:"2rem"}}>Enter into Lobby </h2>
-                        <TextField 
-                        style={{backgroundColor:"white",
-                                borderRadius:"1rem",
-                                marginBottom:"1rem"
-                        }} id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                        <Button variant="contained" onClick={connect}>Connect</Button>
-                    </div>
+                    justifyContent:"center",
+                    alignItems:"center",
+                    width:"100%",
+                }}>
+                    <h1 style={{paddingTop:"2rem", color:"#00c407ff"}}>NexMeet</h1>
+                    <div style={{ 
+                        display:"flex", 
+                        flexWrap:"wrap",
+                        flexDirection:"row",
+                        width:"100%",
+                        justifyContent:"space-evenly",
+                        alignItems:"center",
+                        paddingTop:"5%"
+                        }}>
+                    <div style={{ 
+                        display:"flex", 
+                        flexDirection:"column",
+                        flexWrap:"wrap",
+                        
+                        }}> <h2>Join as guest</h2>
+                            <h2 style={{marginBottom:"2rem"}}>Enter into Lobby </h2>
+                            <TextField 
+                            style={{backgroundColor:"white",
+                                    borderRadius:"1rem",
+                                    marginBottom:"2rem"
+                            }} id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
+                            <Button variant="contained" onClick={connect}>Connect</Button>
+                        </div>
 
-                    <div style={{width:"30rem"}} >
-                            <video style={{borderRadius:"4rem", width:"100%"}} ref={localVideoref} autoPlay muted></video>
+                        <div style={{width:"30rem"}} >
+                                <video style={{borderRadius:"4rem", width:"100%"}} ref={localVideoref} autoPlay muted></video>
+                        </div>
                     </div>
-
                 </div> :
 
 
