@@ -13,21 +13,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  background-color: black;
+  background-image: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    rgb(1, 174, 1),
+    rgb(0, 200, 255),
+    rgb(3, 168, 3),
+    yellow,
+    orange,
+    red /* same as start for smooth loop */
+  );
+  background-repeat: repeat-x;
+  background-size: 300% 1px; /* stretch gradient */
+  animation: borderFlow 10s linear infinite;
 }
-
-.landingPageContainer nav h2 {
-  font-size: 1.8rem;
+@keyframes borderFlow {
+  0% {
+    background-position: 0% bottom;
+  }
+  100% {
+    background-position: 100% bottom;
+  }
+}
+.landingPageContainer nav h2, .logo2{
+  font-size: 2rem; 
   font-weight: 500;
+   background: linear-gradient(90deg, #9a36ff, hsl(201, 100%, 50%));
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for modern browsers */
+  
 }
 
 .landingPageContainer nav .navlist {
   display: flex;
   gap: 1.6rem;
   cursor: pointer;
-
 }
-
+.landingPageContainer nav .navlist>p:hover{
+  text-decoration: underline;
+}
 .landingMainContainer {
   display: flex;
   justify-content: space-between;
@@ -41,7 +69,7 @@
 }
 
 .landingMainContainer>div:nth-child(1) div[role='button'] {
-  background: #D97500;
+  background: #1aaa00;
   width: fit-content;
   padding: 1rem;
   border-radius: 20px;
@@ -59,29 +87,19 @@
   width: auto;
 }
 
-.navBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: 20px;
-  text-align: center;
 
-}
 .meetContainer {
   display: flex;
   padding-inline: 20px;
   height: 80vh;
   gap: 10vw;
   justify-content: center;
+  background: linear-gradient(180deg, rgb(215, 223, 250), hsl(0, 0%, 100%));
 }
-
-
-
 .leftPanel {
   height: 100%;
   display: flex;
   align-items: center;
-
 }
 
 .rightPanel {
@@ -94,3 +112,46 @@
   height: auto;
   border-radius: 20px;
 }
+.authbox {
+  background-color: rgb(153, 153, 153);
+  padding: 2rem;
+  border-radius: 20px;
+}
+.authtextfield{
+  border:none ;
+  border-radius: 16px;
+  background-color: white;
+}
+
+.navBar, .hisdev{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  background-color: rgb(255, 255, 255);
+  padding-inline: 1rem;
+  background-image: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    rgb(1, 174, 1),
+    rgb(0, 200, 255),
+    rgb(3, 168, 3),
+    yellow,
+    orange,
+    red /* same as start for smooth loop */
+  );
+  background-repeat: repeat-x;
+  background-size: 300% 2px; /* stretch gradient */
+  animation: borderFlow 10s linear infinite;
+}
+.navBar>div:nth-child(2){
+  display: flex;
+  gap: 1.2rem;
+}
+/* .hisdev{
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+} */

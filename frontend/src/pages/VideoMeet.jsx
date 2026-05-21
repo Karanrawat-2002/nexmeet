@@ -125,10 +125,7 @@ export default function VideoMeetComponent() {
         if (video !== undefined && audio !== undefined) {
             getUserMedia();
             console.log("SET STATE HAS ", video, audio);
-
         }
-
-
     }, [video, audio])
     let getMedia = () => {
         setVideo(videoAvailable);
@@ -406,19 +403,10 @@ export default function VideoMeetComponent() {
             tracks.forEach(track => track.stop())
         } catch (e) { }
         window.location.href = "/"
+        
     }
 
-    let openChat = () => {
-        setModal(true);
-        setNewMessages(0);
-    }
-    let closeChat = () => {
-        setModal(false);
-    }
-    let handleMessage = (e) => {
-        setMessage(e.target.value);
-    }
-
+    
     const addMessage = (data, sender, socketIdSender) => {
         setMessages((prevMessages) => [
             ...prevMessages,
@@ -447,22 +435,46 @@ export default function VideoMeetComponent() {
 
 
     return (
-        <div>
-
+        <div className='landingPageContainer'>
+            {/* <h1 style={{textAlign:"center", paddingTop:"2rem",backgroundColor:"transparent", }}>NexMeet</h1> */}
             {askForUsername === true ?
 
-                <div>
+                <div style={{ 
+                    display:"flex", 
+                    flexWrap:"wrap",
+                    flexDirection:"column",
+                    justifyContent:"center",
+                    alignItems:"center",
+                    width:"100%",
+                }}>
+                    <h1 style={{paddingTop:"2rem", color:"#00c407ff"}}>NexMeet</h1>
+                    <div style={{ 
+                        display:"flex", 
+                        flexWrap:"wrap",
+                        flexDirection:"row",
+                        width:"100%",
+                        justifyContent:"space-evenly",
+                        alignItems:"center",
+                        paddingTop:"5%"
+                        }}>
+                    <div style={{ 
+                        display:"flex", 
+                        flexDirection:"column",
+                        flexWrap:"wrap",
+                        }}> 
+                            <h2 style={{marginBottom:"2rem", textAlign:"center"}}>Enter into Lobby </h2>
+                            <TextField 
+                            style={{backgroundColor:"white",
+                                    borderRadius:"1rem",
+                                    marginBottom:"2rem"
+                            }} id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
+                            <Button variant="contained" onClick={connect}>Connect</Button>
+                        </div>
 
-
-                    <h2>Enter into Lobby </h2>
-                    <TextField id="outlined-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
-                    <Button variant="contained" onClick={connect}>Connect</Button>
-
-
-                    <div>
-                        <video ref={localVideoref} autoPlay muted></video>
+                        {/* <div style={{width:"30rem"}} >
+                                <video style={{borderRadius:"4rem", width:"100%"}} ref={localVideoref} autoPlay muted></video>
+                        </div> */}
                     </div>
-
                 </div> :
 
 
@@ -470,14 +482,13 @@ export default function VideoMeetComponent() {
 
                     {showModal ? <div className={styles.chatRoom}>
 
-                        <div className={styles.chatContainer}>
+                        <div style={{}} className={styles.chatContainer}>
                             <h1>Chat</h1>
 
-                            <div className={styles.chattingDisplay}>
+                            <div style={{ overflowInline:"auto", height:"80%"}} className={styles.chattingDisplay}>
 
                                 {messages.length !== 0 ? messages.map((item, index) => {
 
-                                    console.log(messages)
                                     return (
                                         <div style={{ marginBottom: "20px" }} key={index}>
                                             <p style={{ fontWeight: "bold" }}>{item.sender}</p>
@@ -485,8 +496,6 @@ export default function VideoMeetComponent() {
                                         </div>
                                     )
                                 }) : <p>No Messages Yet</p>}
-
-
                             </div>
 
                             <div className={styles.chattingArea}>
@@ -517,7 +526,8 @@ export default function VideoMeetComponent() {
 
                         <Badge badgeContent={newMessages} max={999} color='orange'>
                             <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
-                                <ChatIcon />                        </IconButton>
+                                <ChatIcon />                        
+                            </IconButton>
                         </Badge>
 
                     </div>

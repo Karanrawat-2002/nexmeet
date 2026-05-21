@@ -1,0 +1,63 @@
+# Node dependencies
+/backend/node_modules/
+/frontend/node_modules/
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# Runtime / process files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Build / output
+/dist/
+/build/
+/frontend/build/
+coverage/
+coverage-*/
+out/
+
+# Environment files
+.env
+.env.* 
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Cache / bundler
+.cache/
+.parcel-cache/
+.next/
+.vite/
+.nuxt/
+
+# Test artifacts
+/coverage/
+/*.lcov
+/jest-cache/
+
+# Misc
+*.tgz
+*.zip
+tmp/
+temp/

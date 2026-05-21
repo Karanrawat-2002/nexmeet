@@ -26,20 +26,16 @@ function HomeComponent() {
 
                 <div style={{ display: "flex", alignItems: "center" }}>
 
-                    <h2>Apna Video Call</h2>
+                    <h2 className='logo2'>NexMeet Video Call</h2>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton onClick={
+                <div>
+                    <Button type="button" variant="outlined" color='success' onClick={
                         () => {
                             navigate("/history")
                         }
-                    }>
-                        <RestoreIcon />
-                    </IconButton>
-                    <p>History</p>
-
-                    <Button onClick={() => {
+                    }>History</Button>
+                    <Button variant="outlined" color='success' onClick={() => {
                         localStorage.removeItem("token")
                         navigate("/auth")
                     }}>
@@ -54,13 +50,10 @@ function HomeComponent() {
             <div className="meetContainer">
                 <div className="leftPanel">
                     <div>
-                        <h2>Providing Quality Video Call Just Like Quality Education</h2>
-
+                        <h2 style={{marginBlock:"1rem"}}>Providing Quality Video Call <br/>Just Like Quality Education</h2>
                         <div style={{ display: 'flex', gap: "10px" }}>
-
                             <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
-                            <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
-
+                            <Button className='joinButton' onClick={handleJoinVideoCall} variant='contained' color='success'>Join</Button>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ export default function LandingPage() {
         <div className='landingPageContainer'>
             <nav>
                 <div className='navHeader'>
-                    <h2>Apna Video Call</h2>
+                    <h2 className='logo'>NexMeet</h2>
                 </div>
                 <div className='navlist'>
                     <p onClick={() => {
@@ -19,12 +19,12 @@ export default function LandingPage() {
                     <p onClick={() => {
                         router("/auth")
 
-                    }}>Register</p>
+                    }}>Login</p>
                     <div onClick={() => {
                         router("/auth")
 
                     }} role='button'>
-                        <p>Login</p>
+                        <p>Register</p>
                     </div>
                 </div>
             </nav>
@@ -32,9 +32,9 @@ export default function LandingPage() {
 
             <div className="landingMainContainer">
                 <div>
-                    <h1><span style={{ color: "#FF9839" }}>Connect</span> with your loved Ones</h1>
+                    <h1><span style={{ color: "#1aaa00" }}>Buld connection </span> with your friends</h1>
 
-                    <p>Cover a distance by Apna Video Call</p>
+                    <p>Save <span style={{color : "#1aaa00"}}>time</span> and cover <span style={{color : "#1aaa00"}}>distance</span> by NexMeet</p>
                     <div role='button'>
                         <Link to={"/auth"}>Get Started</Link>
                     </div>
