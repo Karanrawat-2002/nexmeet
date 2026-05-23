@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.get("testing", (req, res)=>{
+app.get("/testing", (req, res)=>{
     res.send("Congratulations! Your server is ready to use. ");
 })
 app.use("/api/v1/users", userRoutes);
