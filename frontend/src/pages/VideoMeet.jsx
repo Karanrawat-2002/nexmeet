@@ -67,8 +67,7 @@ export default function VideoMeetComponent() {
     useEffect(() => {
         console.log("HELLO")
         getPermissions();
-
-    })
+    }, [])
 
     let getDislayMedia = () => {
         if (screen) {
@@ -84,7 +83,8 @@ export default function VideoMeetComponent() {
     const getPermissions = async () => {
         try {
             const videoPermission = await navigator.mediaDevices.getUserMedia({ video: true });
-            if (videoPermission) {
+            const videoAllowed = !!videoPermission;
+            if (videoAllowed) {
                 setVideoAvailable(true);
                 console.log('Video permission granted');
             } else {
@@ -93,7 +93,8 @@ export default function VideoMeetComponent() {
             }
 
             const audioPermission = await navigator.mediaDevices.getUserMedia({ audio: true });
-            if (audioPermission) {
+            const audioAllowed = !!audioPermission;
+            if (audioAllowed) {
                 setAudioAvailable(true);
                 console.log('Audio permission granted');
             } else {
@@ -107,8 +108,8 @@ export default function VideoMeetComponent() {
                 setScreenAvailable(false);
             }
 
-            if (videoAvailable || audioAvailable) {
-                const userMediaStream = await navigator.mediaDevices.getUserMedia({ video: videoAvailable, audio: audioAvailable });
+            if (videoAllowed || audioAllowed) {
+                const userMediaStream = await navigator.mediaDevices.getUserMedia({ video: videoAllowed, audio: audioAllowed });
                 if (userMediaStream) {
                     window.localStream = userMediaStream;
                     if (localVideoref.current) {
@@ -287,39 +288,36 @@ export default function VideoMeetComponent() {
 
             socketRef.current.on('user-joined', (id, clients) => {
                 clients.forEach((socketListId) => {
+                    if (socketListId === socketIdRef.current) return;
+                    if (connections[socketListId]) return;
 
-                    connections[socketListId] = new RTCPeerConnection(peerConfigConnections)
-                    // Wait for their ice candidate       
-                    connections[socketListId].onicecandidate = function (event) {
+                    const peerConnection = new RTCPeerConnection(peerConfigConnections);
+                    connections[socketListId] = peerConnection;
+
+                    peerConnection.onicecandidate = (event) => {
                         if (event.candidate != null) {
-                            socketRef.current.emit('signal', socketListId, JSON.stringify({ 'ice': event.candidate }))
+                            socketRef.current.emit('signal', socketListId, JSON.stringify({ ice: event.candidate }));
                         }
-                    }
+                    };
 
-                    // Wait for their video stream
-                    connections[socketListId].onaddstream = (event) => {
-                        console.log("BEFORE:", videoRef.current);
-                        console.log("FINDING ID: ", socketListId);
+                    peerConnection.ontrack = (event) => {
+                        const stream = event.streams[0];
+                        if (!stream) return;
 
                         let videoExists = videoRef.current.find(video => video.socketId === socketListId);
 
                         if (videoExists) {
-                            console.log("FOUND EXISTING");
-
-                            // Update the stream of the existing video
                             setVideos(videos => {
                                 const updatedVideos = videos.map(video =>
-                                    video.socketId === socketListId ? { ...video, stream: event.stream } : video
+                                    video.socketId === socketListId ? { ...video, stream } : video
                                 );
                                 videoRef.current = updatedVideos;
                                 return updatedVideos;
                             });
                         } else {
-                            // Create a new video
-                            console.log("CREATING NEW");
                             let newVideo = {
                                 socketId: socketListId,
-                                stream: event.stream,
+                                stream,
                                 autoplay: true,
                                 playsinline: true
                             };
@@ -332,32 +330,27 @@ export default function VideoMeetComponent() {
                         }
                     };
 
-
-                    // Add the local video stream
-                    if (window.localStream !== undefined && window.localStream !== null) {
-                        connections[socketListId].addStream(window.localStream)
+                    if (window.localStream) {
+                        window.localStream.getTracks().forEach(track => peerConnection.addTrack(track, window.localStream));
                     } else {
-                        let blackSilence = (...args) => new MediaStream([black(...args), silence()])
-                        window.localStream = blackSilence()
-                        connections[socketListId].addStream(window.localStream)
+                        let blackSilence = (...args) => new MediaStream([black(...args), silence()]);
+                        window.localStream = blackSilence();
+                        peerConnection.addTrack(window.localStream.getAudioTracks()[0], window.localStream);
                     }
-                })
+                });
 
                 if (id === socketIdRef.current) {
-                    for (let id2 in connections) {
-                        if (id2 === socketIdRef.current) continue
+                    for (let peerId in connections) {
+                        if (peerId === socketIdRef.current) continue;
 
-                        try {
-                            connections[id2].addStream(window.localStream)
-                        } catch (e) { }
+                        const peerConnection = connections[peerId];
+                        if (!peerConnection) continue;
 
-                        connections[id2].createOffer().then((description) => {
-                            connections[id2].setLocalDescription(description)
-                                .then(() => {
-                                    socketRef.current.emit('signal', id2, JSON.stringify({ 'sdp': connections[id2].localDescription }))
-                                })
-                                .catch(e => console.log(e))
-                        })
+                        peerConnection.createOffer().then((description) => {
+                            return peerConnection.setLocalDescription(description);
+                        }).then(() => {
+                            socketRef.current.emit('signal', peerId, JSON.stringify({ sdp: peerConnection.localDescription }));
+                        }).catch(e => console.log(e));
                     }
                 }
             })
@@ -483,7 +476,7 @@ export default function VideoMeetComponent() {
                     {showModal ? <div className={styles.chatRoom}>
 
                         <div style={{}} className={styles.chatContainer}>
-                            <h1>Chat</h1>
+                            <h1 style={{color:"black"}}>Chat</h1>
 
                             <div style={{ overflowInline:"auto", height:"80%"}} className={styles.chattingDisplay}>
 
@@ -491,11 +484,11 @@ export default function VideoMeetComponent() {
 
                                     return (
                                         <div style={{ marginBottom: "20px" }} key={index}>
-                                            <p style={{ fontWeight: "bold" }}>{item.sender}</p>
-                                            <p>{item.data}</p>
+                                            <p style={{ fontWeight: "bold", color:"black" }}>{item.sender}</p>
+                                            <p style={{ color: "black" }}>{item.data}</p>
                                         </div>
                                     )
-                                }) : <p>No Messages Yet</p>}
+                                }) : <p style={{ color: "black" }}>No Messages Yet</p>}
                             </div>
 
                             <div className={styles.chattingArea}>
