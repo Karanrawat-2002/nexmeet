@@ -21,6 +21,10 @@ app.use(express.urlencoded({ limit: "40kb", extended: true }));
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+
+app.get("testing", (req, res)=>{
+    res.send("Congratulations! Your server is ready to use. ");
+})
 app.use("/api/v1/users", userRoutes);
 
 const start = async () => {
